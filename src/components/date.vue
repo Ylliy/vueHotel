@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div v-for="ym in printYear(2017)" :key="ym" class="canlendar">
-      <!--<date-table :year="2017" :month="6"></date-table>
-        <date-table :year="2017" :month="7"></date-table>
-        <date-table :year="2017" :month="8"></date-table>
-        <date-table :year="2017" :month="9"></date-table>-->
+    <div v-for="ym in printYear(19)" :key="ym" class="canlendar">
+  
       <div>{{transformMonth(ym.month)}}月 {{ym.year}}</div>
       <date-table :year="ym.year" :month="ym.month"></date-table>
     </div>
@@ -16,28 +13,40 @@
 
   export default {
     data() {
-      return {}
+      return {
+        nowYear() {
+          return new Date().getFullYear();
+        },
+      }
     },
 
     computed: {
 
-
-
-
     },
     methods: {
-      printYear(year) {
+      printYear( limit = 0) {
         let allMonth = []
-        for (let i = 0; i < 12; i++) {
+        let i = 0;
+        let year = this.nowYear();
+
+
+        i = new Date().getMonth();
+        let duration = i;
+
+        for (i; i < duration + limit; i++) {
+          
           let cell = {
             year,
             month: i
           }
+          if (i >= 12) {
+            cell.year += Math.floor(i/12);
+            cell.month = i%12;
+          }
           allMonth.push(cell)
 
-
         }
-
+        console.log(allMonth)
         return allMonth;
 
       },
@@ -51,3 +60,13 @@
     }
   }
 </script>
+
+
+<style lang="scss">
+  .canlendar {
+    width: 100%;
+    table {
+      width: 100%;
+    }
+  }
+</style>
