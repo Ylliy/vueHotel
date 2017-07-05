@@ -1,5 +1,5 @@
 <template>
-    <table>
+    <table @click="handlerClick">
         <th>
     
         </th>
@@ -113,6 +113,9 @@
             //     }
             //     return false;
             // }
+            handlerClick(e){
+                console.log(e)
+            }
 
         }
     }

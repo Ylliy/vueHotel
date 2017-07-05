@@ -13,19 +13,20 @@ export default new Router({
     mode: 'history',
     routes: [{
         path: '/',
-        // name: 'Home',
+
+        name: 'Home',
         component: Home
     }, {
         path: '/city',
-        // name: 'City',
+        name: 'City',
         component: City
     }, {
         path: '/date',
-        // name: 'City',
+        name: 'Date',
         component: Date
     }, , {
         path: '/keywords',
-        // name: 'City',
+        name: 'Keywords',
         component: Keywords
     }]
 })

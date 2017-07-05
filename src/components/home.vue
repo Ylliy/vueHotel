@@ -30,7 +30,7 @@
                     <div>日期</div>
                 </router-link>
     
-                <router-link to="/city" tag="li" class="keywords">
+                <router-link to="/keywords" tag="li" class="keywords">
                     <div>关键字/位置/品牌/酒店</div>
                 </router-link>
             </ul>

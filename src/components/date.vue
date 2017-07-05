@@ -1,9 +1,13 @@
 <template>
   <div>
-    <div v-for="ym in printYear(19)" :key="ym" class="canlendar">
+    <div >
+      <router-link to="/">back</router-link>
+    </div>
+    
+    <div v-for="ym in printYear(4)" :key="ym" class="canlendar">
   
       <div>{{transformMonth(ym.month)}}月 {{ym.year}}</div>
-      <date-table :year="ym.year" :month="ym.month"></date-table>
+      <date-table :year="ym.year" :month="ym.month" ></date-table>
     </div>
   </div>
 </template>
@@ -53,7 +57,11 @@
       transformMonth(month) {
         let cMonth = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
         return cMonth[month]
-      }
+      },
+
+      handlerClick(e){
+        console.log(e);
+      },
     },
     components: {
       DateTable
