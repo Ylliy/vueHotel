@@ -142,7 +142,7 @@
                 const cell = this.rows[rowIndex - 1][cellIndex];
 
                 this.$emit('pick', cell)
-                cell.isSelect = true
+                // cell.isSelect = true
 
                 // console.log(this.minDate);
                 // if ()

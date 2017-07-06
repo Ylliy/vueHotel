@@ -70,10 +70,12 @@ import Vue from 'vue'
         // debugger;
         console.log('out');
         console.log(e);
+        e.isSelect = true;
+        
         // if (this.minDate.year == '') {
 
           // Vue.set(this.minDate ,year,e.year)
-          // this.minDate = e.year + '-'+e.month+'-'+e.text
+          this.minDate = e.year + '-'+e.month+'-'+e.text
           // this.minDate.month = e.month
           // this.minDate.day = e.text
         // }
@@ -88,7 +90,6 @@ import Vue from 'vue'
         //   })
 
         // }
-        // e.isSelect = true;
 
       },
 
