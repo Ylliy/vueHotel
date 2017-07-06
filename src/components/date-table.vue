@@ -10,16 +10,22 @@
                 </td>
             </tr>
             <tr v-for="row in rows">
-                <td v-for="data in row">
-                    {{data.text}}
-                    <span v-if="data.now">今天</span>
+                <td v-for="cell in row" :class="getCellClass(cell)">
+                    {{cell.text}}
+                    <span v-if="cell.now">今天</span>
                 </td>
             </tr>
         </tbody>
+    
+        <div>
+            {{test}}
+        </div>
     </table>
 </template>
 
 <script>
+    import Vue from 'vue'
+    import { mapActions } from 'vuex'
     function getDayCountOfMonth(year, month) {
         if (month === 3 || month === 5 || month === 8 || month === 10) {
             return 30;
@@ -44,12 +50,19 @@
 
     export default {
         // name:"date-table"
+        data() {
+            return {
+                tableRows: [[], [], [], [], [], []]
+            }
+        },
         props: {
             year: {},
             month: {},
             isChinese: {
                 type: Boolean,
-            }
+            },
+            test: '',
+            minDate: {}
 
         },
         computed: {
@@ -57,6 +70,7 @@
                 return ['日', '一', '二', '三', '四', '五', '六']
             },
             rows() {
+                console.log(this.minDate);
                 let now = new Date();
                 let year = this.year;
                 let month = this.month
@@ -65,7 +79,7 @@
                 let firstDayPostion = getFirstDayPosition(year, month);
 
                 let offSetDay = firstDayPostion - 1;
-                let rows = [];
+                let rows = this.tableRows;
                 for (let i = 0; i < 6; i++) {
                     let row = [];
                     for (let j = 0; j < 7; j++) {
@@ -78,7 +92,8 @@
                             year: year,
                             month,
                             text: day,
-                            now: false
+                            now: false,
+                            isSelect: false
                         };
                         if (now.getFullYear() === cell.year &&
                             now.getMonth() == cell.month &&
@@ -105,16 +120,45 @@
 
         },
         methods: {
-            // toDay(date){
-            //     console.log(date)
-            //     let toDay = new Date();
-            //     if (date.year === toDay.getFullYear() && date.text == toDay.date()){
-            //         return true;
-            //     }
-            //     return false;
-            // }
-            handlerClick(e){
-                console.log(e)
+            getCellClass(cell) {
+
+                console.log('getCellClass');
+                // console.log(cell.isSelect);
+                if (cell.isSelect) {
+                    return ['S']
+                } else {
+                    return ['W']
+                }
+
+            },
+            handlerClick(e, a) {
+                // debugger;
+                console.log(e.target);
+                let target = event.target;
+
+                const cellIndex = target.cellIndex;
+                const rowIndex = target.parentNode.rowIndex;
+
+                const cell = this.rows[rowIndex - 1][cellIndex];
+
+                this.$emit('pick', cell)
+                cell.isSelect = true
+
+                // console.log(this.minDate);
+                // if ()
+                // this.$store.commit('changeDate',{
+                //     minDate:{
+                //         year:cell.year,
+                //         month:cell.month,
+                //         day : cell.text
+                //     },
+                //     maxDate:{
+                //         year:cell.year,
+                //         month:cell.month,
+                //         day : cell.text
+                //     }
+                // })
+                console.log('这是table')
             }
 
         }
@@ -133,6 +177,14 @@
         width: 14.3%;
         font-family: "Arial";
         background-color: #fff;
+    }
+    
+    .N {
+        background: #000;
+    }
+    
+    .S {
+        background: red;
     }
 </style>
 

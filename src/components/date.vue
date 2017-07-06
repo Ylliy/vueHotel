@@ -1,19 +1,21 @@
 <template>
   <div>
-    <div >
+    <div>
       <router-link to="/">back</router-link>
     </div>
-    
+  
     <div v-for="ym in printYear(4)" :key="ym" class="canlendar">
   
       <div>{{transformMonth(ym.month)}}月 {{ym.year}}</div>
-      <date-table :year="ym.year" :month="ym.month" ></date-table>
+      <date-table :year="ym.year" :month="ym.month"  @pick="handlerClick"></date-table>
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
   import DateTable from './date-table'
+
 
   export default {
     data() {
@@ -21,6 +23,10 @@
         nowYear() {
           return new Date().getFullYear();
         },
+
+        // minDate: {},
+        // maxDate: {}
+
       }
     },
 
@@ -28,24 +34,25 @@
 
     },
     methods: {
-      printYear( limit = 0) {
+      printYear(limit = 0) {
         let allMonth = []
         let i = 0;
         let year = this.nowYear();
-
+        // this.minDate =12333
 
         i = new Date().getMonth();
         let duration = i;
 
         for (i; i < duration + limit; i++) {
-          
+
           let cell = {
             year,
-            month: i
+            month: i,
+ 
           }
           if (i >= 12) {
-            cell.year += Math.floor(i/12);
-            cell.month = i%12;
+            cell.year += Math.floor(i / 12);
+            cell.month = i % 12;
           }
           allMonth.push(cell)
 
@@ -59,9 +66,32 @@
         return cMonth[month]
       },
 
-      handlerClick(e){
+      handlerClick(e) {
+        // debugger;
+        console.log('out');
         console.log(e);
+        // if (this.minDate.year == '') {
+
+          // Vue.set(this.minDate ,year,e.year)
+          // this.minDate = e.year + '-'+e.month+'-'+e.text
+          // this.minDate.month = e.month
+          // this.minDate.day = e.text
+        // }
+        // if (this.minDate.year != '' && this.maxDate.year == '') {
+        //   this.maxDate.year = e.year;
+        //   this.maxDate.month = e.month;
+        //   this.maxDate.day = e.text;
+        //   console.log(this.$store.getters.allMonth);
+        //   this.$store.commit('changeDate', {
+        //     minDate: this.minDate,
+        //     maxDate: this.maxDate
+        //   })
+
+        // }
+        // e.isSelect = true;
+
       },
+
     },
     components: {
       DateTable
