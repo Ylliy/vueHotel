@@ -141,8 +141,15 @@
 
                 const cell = this.rows[rowIndex - 1][cellIndex];
 
-                this.$emit('pick', cell)
-                // cell.isSelect = true
+                cell.isSelect = true;
+                this.$emit('pick', cell);
+
+                //提交更改到vuex
+                // this.$store.commit('changeDate', {
+                //     minDate: cell,
+                //     maxDate: this.maxDate
+                // })
+
 
                 // console.log(this.minDate);
                 // if ()

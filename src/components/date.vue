@@ -23,10 +23,7 @@ import Vue from 'vue'
         nowYear() {
           return new Date().getFullYear();
         },
-
-        // minDate: {},
-        // maxDate: {}
-
+        // startDate：
       }
     },
 
@@ -68,14 +65,14 @@ import Vue from 'vue'
 
       handlerClick(e) {
         // debugger;
-        console.log('out');
+        console.log('执行pic');
         console.log(e);
-        e.isSelect = true;
+        
         
         // if (this.minDate.year == '') {
 
           // Vue.set(this.minDate ,year,e.year)
-          this.minDate = e.year + '-'+e.month+'-'+e.text
+          // this.minDate = e.year + '-'+e.month+'-'+e.text
           // this.minDate.month = e.month
           // this.minDate.day = e.text
         // }
@@ -90,6 +87,15 @@ import Vue from 'vue'
         //   })
 
         // }
+
+        /*
+        * 当子组件触发父组件事件如pick:handlerClick
+        * 传递数据，父组件自定义事件修改父组件data里的值，
+        * 父组件通过props 传递给子组件更改时，出现子组件数据没有更新（？）或渲染更新无效
+        *
+        *待验证是否为props单项数据流问题？？？？？？？？
+        *
+        */
 
       },
 
