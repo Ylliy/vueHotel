@@ -12,7 +12,7 @@
     name: 'app',
     beforeCreate() {
       // if (this.$store.state.cityName == '') {
-        var date = JSON.parse(document.cookie.split('=')[1]);
+        var date = JSON.parse(document.cookie.split('=')[1] || '{}');
         this.$store.commit('setSearchInfo', date)
       // }
     }
