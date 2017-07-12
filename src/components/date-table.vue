@@ -18,41 +18,23 @@
         </tbody>
     
         <div>
-            {{test}}
+        
         </div>
     </table>
 </template>
 
 <script>
     import Vue from 'vue'
+    import {getDayCountOfMonth,getFirstDayPosition} from '../util'
     import { mapActions } from 'vuex'
-    function getDayCountOfMonth(year, month) {
-        if (month === 3 || month === 5 || month === 8 || month === 10) {
-            return 30;
-        }
-
-        if (month === 1) {
-            if (year % 4 === 0 && year % 100 !== 0 || year % 400 === 0) {
-                return 29;
-            } else {
-                return 28;
-            }
-        }
-
-        return 31;
-    };
-
-    function getFirstDayPosition(year, month) {
-        let firstDay = new Date(year, month, 1);
-
-        return firstDay.getDay();
-    }
+    
 
     export default {
         // name:"date-table"
         data() {
             return {
-                tableRows: [[], [], [], [], [], []]
+                tableRows: [[], [], [], [], [], []],
+                minDate:{}
             }
         },
         props: {
@@ -61,8 +43,7 @@
             isChinese: {
                 type: Boolean,
             },
-            test: '',
-            minDate: {}
+
 
         },
         computed: {
@@ -113,6 +94,18 @@
 
                 return rows;
 
+                
+               /*
+                *
+                *computer 内的方法在依赖未改变是不会更新,及更改rows不触发computer执行,
+                *但视图依赖getCellClass和rows,当这两个数据跟新时会触发methods变化。
+                *
+                *
+                */
+
+
+                
+
 
 
 
@@ -142,6 +135,7 @@
                 const cell = this.rows[rowIndex - 1][cellIndex];
 
                 cell.isSelect = true;
+                console.log(  this.minDate instanceof Object);
                 this.$emit('pick', cell);
 
                 //提交更改到vuex
