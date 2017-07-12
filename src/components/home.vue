@@ -27,7 +27,7 @@
     
                 </li>
     
-                <router-link to="/date" tag="li" class="date">
+                <router-link to="/datePick" tag="li" class="date">
                     <div class="date-label">
                         <em>日期</em>
                     </div>

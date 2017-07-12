@@ -3,7 +3,7 @@ import Router from 'vue-router'
 // import Hello from '@/components/Hello'
 import Home from '@/components/home'
 import City from '@/components/city'
-import Date from '@/components/date'
+import DatePick from '@/components/datePick'
 import Keywords from '@/components/keywords'
 
 
@@ -21,9 +21,9 @@ export default new Router({
         name: 'City',
         component: City
     }, {
-        path: '/date',
-        name: 'Date',
-        component: Date
+        path: '/datepick',
+        name: 'DatePick',
+        component: DatePick
     }, , {
         path: '/keywords',
         name: 'Keywords',

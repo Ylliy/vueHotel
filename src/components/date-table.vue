@@ -34,7 +34,7 @@
         data() {
             return {
                 tableRows: [[], [], [], [], [], []],
-                minDate:{}
+                
             }
         },
         props: {
@@ -43,15 +43,18 @@
             isChinese: {
                 type: Boolean,
             },
-
+            minDate:{},
+            maxDate:{}
 
         },
         computed: {
+            getMindate(){
+                return this.minDate;
+            },
             WEEk() {
                 return ['日', '一', '二', '三', '四', '五', '六']
             },
             rows() {
-                console.log(this.minDate);
                 let now = new Date();
                 let year = this.year;
                 let month = this.month
@@ -74,7 +77,8 @@
                             month,
                             text: day,
                             now: false,
-                            isSelect: false
+                            isSelect: false,
+                            disabled:false,
                         };
                         if (now.getFullYear() === cell.year &&
                             now.getMonth() == cell.month &&
@@ -94,7 +98,7 @@
 
                 return rows;
 
-                
+
                /*
                 *
                 *computer 内的方法在依赖未改变是不会更新,及更改rows不触发computer执行,
@@ -113,8 +117,9 @@
 
         },
         methods: {
+            
             getCellClass(cell) {
-
+                
                 console.log('getCellClass');
                 // console.log(cell.isSelect);
                 if (cell.isSelect) {
@@ -136,8 +141,10 @@
 
                 cell.isSelect = true;
                 console.log(  this.minDate instanceof Object);
-                this.$emit('pick', cell);
-
+                // this.$set(this.minDate, {'text':'123456789'+Math.random()});
+                this.getMindate = '123456789'+Math.random();
+                this.$emit('pick', cell);   
+                
                 //提交更改到vuex
                 // this.$store.commit('changeDate', {
                 //     minDate: cell,
@@ -162,6 +169,11 @@
                 console.log('这是table')
             }
 
+        },
+        watch:{
+            'minDate.text'(newVal){
+                console.log('this is minDate::',newVal,oldVal);
+            }
         }
     }
 </script>

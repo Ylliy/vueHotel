@@ -1,19 +1,19 @@
 <template>
   <div>
-    <div>
-      <router-link to="/">back</router-link>
-    </div>
+    <!--<div>
+          <router-link to="/">back</router-link>
+        </div>-->
   
-    <div v-for="ym in printYear(4)" :key="ym" class="canlendar">
+    <div v-for="ym in printYear(4)" :key="ym" class="canlendar"  >
   
       <div>{{transformMonth(ym.month)}}月 {{ym.year}}</div>
-      <date-table :year="ym.year" :month="ym.month"  @pick="handlerClick"></date-table>
+      <date-table :year="ym.year" :month="ym.month" @pick="handlerClick" :minDate="minDate" :maxDate="maxDate" ></date-table>
     </div>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
+  import Vue from 'vue'
   import DateTable from './date-table'
 
 
@@ -23,7 +23,8 @@ import Vue from 'vue'
         nowYear() {
           return new Date().getFullYear();
         },
-        // startDate：
+        minDate:'123',
+        maxDate:'1234'
       }
     },
 
@@ -45,7 +46,7 @@ import Vue from 'vue'
           let cell = {
             year,
             month: i,
- 
+
           }
           if (i >= 12) {
             cell.year += Math.floor(i / 12);
@@ -67,14 +68,14 @@ import Vue from 'vue'
         // debugger;
         console.log('执行pic');
         console.log(e);
-        
-        
+
+
         // if (this.minDate.year == '') {
 
-          // Vue.set(this.minDate ,year,e.year)
-          // this.minDate = e.year + '-'+e.month+'-'+e.text
-          // this.minDate.month = e.month
-          // this.minDate.day = e.text
+        // Vue.set(this.minDate ,year,e.year)
+        // this.minDate = e.year + '-'+e.month+'-'+e.text
+        // this.minDate.month = e.month
+        // this.minDate.day = e.text
         // }
         // if (this.minDate.year != '' && this.maxDate.year == '') {
         //   this.maxDate.year = e.year;
