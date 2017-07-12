@@ -4,10 +4,10 @@
     
         </th>
         <tbody>
-            <tr>
-                <td v-for="w in WEEk">
+            <tr class="week">
+                <th v-for="w in WEEk">
                     {{w}}
-                </td>
+                </th>
             </tr>
             <tr v-for="row in rows">
                 <td v-for="cell in row" :class="getCellClass(cell)">
@@ -18,23 +18,26 @@
         </tbody>
     
         <div>
-        
+    
         </div>
     </table>
 </template>
 
 <script>
     import Vue from 'vue'
-    import {getDayCountOfMonth,getFirstDayPosition} from '../util'
+    import { getDayCountOfMonth, getFirstDayPosition } from '../util'
     import { mapActions } from 'vuex'
-    
+
 
     export default {
         // name:"date-table"
+        beforeCreate(){
+          window.tmp1 = this;  
+        },
         data() {
             return {
                 tableRows: [[], [], [], [], [], []],
-                
+
             }
         },
         props: {
@@ -43,12 +46,12 @@
             isChinese: {
                 type: Boolean,
             },
-            minDate:{},
-            maxDate:{}
+            minDate: {},
+            maxDate: {}
 
         },
         computed: {
-            getMindate(){
+            getMindate() {
                 return this.minDate;
             },
             WEEk() {
@@ -68,47 +71,51 @@
                     let row = [];
                     for (let j = 0; j < 7; j++) {
                         let day = (i * 7) + j - offSetDay;
-
+                        let disable = true;
                         if (day < 1 || day > dayCountOfMonth) {
-                            day = null
+                            day = null;
                         }
+                        if ((now.getTime() - 24*3600*1000) <= new Date(year, month, day || 1).getTime() && day ) {
+                            disable = false;
+                        }
+
                         let cell = {
                             year: year,
                             month,
                             text: day,
                             now: false,
                             isSelect: false,
-                            disabled:false,
+                            disabled: false || disable,
                         };
                         if (now.getFullYear() === cell.year &&
                             now.getMonth() == cell.month &&
                             now.getDate() === cell.text) {
                             cell.now = true;
                         }
-                        row.push(cell)
+                        if (i == 5 && j == 0 && cell.text == null) {
+                            break;
+                        }
+                        rows[i].push(cell)
                     }
 
-                    if (i == 5 && row[0].text == null) {
-                        continue;
-                    }
 
-                    rows.push(row)
+                    // rows.push(row)
 
                 }
 
                 return rows;
 
 
-               /*
-                *
-                *computer 内的方法在依赖未改变是不会更新,及更改rows不触发computer执行,
-                *但视图依赖getCellClass和rows,当这两个数据跟新时会触发methods变化。
-                *
-                *
-                */
+                /*
+                 *
+                 *computer 内的方法在依赖未改变是不会更新,及更改rows不触发computer执行,
+                 *但视图依赖getCellClass和rows,当这两个数据跟新时会触发methods变化。
+                 *
+                 *
+                 */
 
 
-                
+
 
 
 
@@ -117,12 +124,10 @@
 
         },
         methods: {
-            
+
             getCellClass(cell) {
-                
-                console.log('getCellClass');
-                // console.log(cell.isSelect);
-                if (cell.isSelect) {
+
+                if (cell.isSelect && !cell.disabled) {
                     return ['S']
                 } else {
                     return ['W']
@@ -130,7 +135,7 @@
 
             },
             handlerClick(e, a) {
-                // debugger;
+
                 console.log(e.target);
                 let target = event.target;
 
@@ -140,11 +145,11 @@
                 const cell = this.rows[rowIndex - 1][cellIndex];
 
                 cell.isSelect = true;
-                console.log(  this.minDate instanceof Object);
+                console.log(this.minDate instanceof Object);
                 // this.$set(this.minDate, {'text':'123456789'+Math.random()});
-                this.getMindate = '123456789'+Math.random();
-                this.$emit('pick', cell);   
-                
+                this.getMindate = '123456789' + Math.random();
+                this.$emit('pick', cell);
+
                 //提交更改到vuex
                 // this.$store.commit('changeDate', {
                 //     minDate: cell,
@@ -170,9 +175,9 @@
             }
 
         },
-        watch:{
-            'minDate.text'(newVal){
-                console.log('this is minDate::',newVal,oldVal);
+        watch: {
+            'minDate.text'(newVal) {
+                console.log('this is minDate::', newVal, oldVal);
             }
         }
     }
@@ -190,6 +195,15 @@
         width: 14.3%;
         font-family: "Arial";
         background-color: #fff;
+    }
+    
+    .week th {
+        text-align: center;
+        height: 24px;
+        vertical-align: middle;
+        background: #dfdfdf;
+        font-size: 1.2rem;
+        color: #666;
     }
     
     .N {

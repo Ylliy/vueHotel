@@ -1,13 +1,13 @@
 <template>
   <div>
     <!--<div>
-          <router-link to="/">back</router-link>
-        </div>-->
+            <router-link to="/">back</router-link>
+          </div>-->
   
-    <div v-for="ym in printYear(4)" :key="ym" class="canlendar"  >
+    <div v-for="ym in printYear(4)" :key="ym" class="canlendar">
   
-      <div>{{transformMonth(ym.month)}}月 {{ym.year}}</div>
-      <date-table :year="ym.year" :month="ym.month" @pick="handlerClick" :minDate="minDate" :maxDate="maxDate" ></date-table>
+      <div class="table-header">{{transformMonth(ym.month)}}月&nbsp;&nbsp;&nbsp;&nbsp;{{ym.year}}</div>
+      <date-table :year="ym.year" :month="ym.month" @pick="handlerClick" :minDate="minDate" :maxDate="maxDate"></date-table>
     </div>
   </div>
 </template>
@@ -23,8 +23,8 @@
         nowYear() {
           return new Date().getFullYear();
         },
-        minDate:'123',
-        maxDate:'1234'
+        minDate: '123',
+        maxDate: '1234'
       }
     },
 
@@ -113,6 +113,14 @@
     width: 100%;
     table {
       width: 100%;
+    }
+    .table-header {
+      text-align: center;
+      height: 38px;
+      line-height: 38px;
+      font-size: 1.4rem;
+      color: #333;
+      background-color: #ededed;
     }
   }
 </style>
