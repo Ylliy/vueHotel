@@ -1,13 +1,13 @@
 <template>
   <div>
     <!--<div>
-            <router-link to="/">back</router-link>
-          </div>-->
+                  <router-link to="/">back</router-link>
+                </div>-->
   
     <div v-for="ym in printYear(4)" :key="ym" class="canlendar">
   
       <div class="table-header">{{transformMonth(ym.month)}}月&nbsp;&nbsp;&nbsp;&nbsp;{{ym.year}}</div>
-      <date-table :year="ym.year" :month="ym.month" @pick="handlerClick" :minDate="minDate" :maxDate="maxDate"></date-table>
+      <date-table :year="ym.year" :month="ym.month" @pick="handlerClick" :startDate="startDate" :endDate="endDate"></date-table>
     </div>
   </div>
 </template>
@@ -15,16 +15,22 @@
 <script>
   import Vue from 'vue'
   import DateTable from './date-table'
-
+  function formateDate(date) {
+    return date.year + '-' + (date.month + 1) + '-' + date.text
+  }
 
   export default {
+    beforeCreate() {
+      window.tmpx = this;
+    },
     data() {
       return {
         nowYear() {
           return new Date().getFullYear();
         },
-        minDate: '123',
-        maxDate: '1234'
+        selectDate: [],
+        startDate: '',
+        endDate: ''
       }
     },
 
@@ -64,12 +70,31 @@
         return cMonth[month]
       },
 
-      handlerClick(e) {
+      handlerClick(e, a) {
         // debugger;
         console.log('执行pic');
         console.log(e);
+        if (this.selectDate.length == 0) {
+
+          this.selectDate.push(formateDate(e));
+        } else if (this.selectDate.length == 1) {
+          if (formateDate(e) > this.selectDate[0]) {
+            this.selectDate.push(formateDate(e));
+            this.startDate = this.selectDate[0];
+            this.endDate = this.selectDate[1];
+          }
 
 
+
+        } else if (this.selectDate.length == 2) {
+          this.selectDate.pop();
+          this.selectDate.pop();
+          this.selectDate.push(formateDate(e));
+          this.startDate = this.selectDate[0];
+          this.endDate = this.selectDate[1];
+        }
+        console.log('selectDate:', this.selectDate);
+        // this.startDate = e.year + '-'+(e.month + 1)+'-'+e.text;
         // if (this.minDate.year == '') {
 
         // Vue.set(this.minDate ,year,e.year)

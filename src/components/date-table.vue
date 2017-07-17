@@ -31,33 +31,34 @@
 
     export default {
         // name:"date-table"
-        beforeCreate(){
-          window.tmp1 = this;  
+        beforeCreate() {
+            window.tmp1 = this;
         },
         data() {
             return {
                 tableRows: [[], [], [], [], [], []],
+
+                selectDate:[],
 
             }
         },
         props: {
             year: {},
             month: {},
-            isChinese: {
-                type: Boolean,
-            },
-            minDate: {},
-            maxDate: {}
+
+            startDate: {},
+            endDate: {}
 
         },
         computed: {
-            getMindate() {
-                return this.minDate;
-            },
+            // getMindate() {
+            //     return this.minDate;
+            // },
             WEEk() {
                 return ['日', '一', '二', '三', '四', '五', '六']
             },
             rows() {
+                console.log('********************')
                 let now = new Date();
                 let year = this.year;
                 let month = this.month
@@ -75,7 +76,7 @@
                         if (day < 1 || day > dayCountOfMonth) {
                             day = null;
                         }
-                        if ((now.getTime() - 24*3600*1000) <= new Date(year, month, day || 1).getTime() && day ) {
+                        if ((now.getTime() - 24 * 3600 * 1000) <= new Date(year, month, day || 1).getTime() && day) {
                             disable = false;
                         }
 
@@ -86,7 +87,22 @@
                             now: false,
                             isSelect: false,
                             disabled: false || disable,
+                            startDate: false,
+                            endDate: false
                         };
+
+
+
+                        if(this.startDate == this.year + '-' + (this.month + 1) +'-'+ day){
+
+                            cell.startDate = true ;
+                            cell.isSelect = true;
+                        }
+                        
+                        if(this.endDate == this.year + '-' + (this.month + 1) +'-'+ day){
+                            cell.startDate = true ;
+                            cell.isSelect = true;
+                        }
                         if (now.getFullYear() === cell.year &&
                             now.getMonth() == cell.month &&
                             now.getDate() === cell.text) {
@@ -145,9 +161,13 @@
                 const cell = this.rows[rowIndex - 1][cellIndex];
 
                 cell.isSelect = true;
-                console.log(this.minDate instanceof Object);
+                // console.log(this.minDate instanceof Object);
                 // this.$set(this.minDate, {'text':'123456789'+Math.random()});
-                this.getMindate = '123456789' + Math.random();
+                // this.getMindate = '123456789' + Math.random();
+
+                if (cell.disabled) {
+                    return false;
+                }
                 this.$emit('pick', cell);
 
                 //提交更改到vuex
@@ -176,9 +196,7 @@
 
         },
         watch: {
-            'minDate.text'(newVal) {
-                console.log('this is minDate::', newVal, oldVal);
-            }
+
         }
     }
 </script>
