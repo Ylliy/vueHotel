@@ -1,19 +1,27 @@
 <template>
   <div id="app">
     <router-view></router-view>
-
+  
   </div>
-
-
 </template>
 
 <script>
+import {setCookie,getCookie} from './util'
   export default {
     name: 'app',
     beforeCreate() {
       // if (this.$store.state.cityName == '') {
-        var date = JSON.parse(document.cookie.split('=')[1] || '{}');
-        this.$store.commit('setSearchInfo', date)
+      let date = new Date();
+      let nextDate = new Date((date.getTime() + 3600 * 24 * 1000));
+      let sdate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+      let snextdate = nextDate.getFullYear() + '-' + (nextDate.getMonth() + 1) + '-' + nextDate.getDate();
+      let payload = {
+        checkIn: sdate,
+        checkOut: snextdate
+      }
+      var data = JSON.parse(document.cookie.split('=')[1] || JSON.stringify(payload));
+      this.$store.commit('setSearchInfo', data);
+
       // }
     }
   }

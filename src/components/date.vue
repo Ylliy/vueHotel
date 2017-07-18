@@ -1,8 +1,8 @@
 <template>
   <div>
     <!--<div>
-                  <router-link to="/">back</router-link>
-                </div>-->
+                          <router-link to="/">back</router-link>
+                        </div>-->
   
     <div v-for="ym in printYear(4)" :key="ym" class="canlendar">
   
@@ -19,23 +19,32 @@
     return date.year + '-' + (date.month + 1) + '-' + date.text
   }
 
+  function compareTime(t1, t2) {
+    let time1 = new Date(t1).getTime();
+    let time2 = new Date(t2).getTime();
+
+    return time1 >= time2;
+  }
+
   export default {
     beforeCreate() {
-      window.tmpx = this;
+
     },
     data() {
       return {
         nowYear() {
           return new Date().getFullYear();
         },
-        selectDate: [],
-        startDate: '',
-        endDate: ''
+        selectDate: [this.$store.getters.getCheckIn, this.$store.getters.getCheckOut],
+        startDate: '' || this.$store.getters.getCheckIn,
+        endDate: '' || this.$store.getters.getCheckOut
       }
     },
 
     computed: {
-
+      // selectDate(){
+      //   return [this.startDate,this.endDate]
+      // }
     },
     methods: {
       printYear(limit = 0) {
@@ -78,10 +87,18 @@
 
           this.selectDate.push(formateDate(e));
         } else if (this.selectDate.length == 1) {
-          if (formateDate(e) > this.selectDate[0]) {
+          if (compareTime(formateDate(e), this.selectDate[0])) {
             this.selectDate.push(formateDate(e));
             this.startDate = this.selectDate[0];
             this.endDate = this.selectDate[1];
+
+            this.$store.commit('changeDate', this.selectDate);
+            history.go(-1)
+
+          } else {
+            this.selectDate.pop();
+            this.selectDate.push(formateDate(e))
+            this.startDate = this.selectDate[0];
           }
 
 

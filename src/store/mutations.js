@@ -11,7 +11,7 @@ export default {
         state.cityName = payload;
     },
     changeDate(state, val) {
-        state.checkInDate = val.minDate.year + '-' + (val.minDate.month + 1) + '-' + val.minDate.month;
-        state.checkOutDate = val.maxDate.year + '-' + (val.maxDate.month + 1) + '-' + val.maxDate.month
+        state.checkInDate = val[0];
+        state.checkOutDate = val[1];
     }
 }

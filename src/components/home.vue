@@ -34,15 +34,15 @@
                     <div class="in-out-date">
                         <div class="check-date">
                             <div class="check-in">
-                                <span>7月11日</span>
+                                <span>{{changeSlash[0]}}</span>
                                 <em>入住</em>
                             </div>
                             <div class="check-out">
-                                <span>7月11日</span>
+                                <span>{{changeSlash[1]}}</span>
                                 <em>离店</em>
                             </div>
                         </div>
-                        <div class="total-night">共1晚</div>
+                        <div class="total-night">共{{getNightCount}}晚</div>
                     </div>
                     <i class="icon-arrow"></i>
     
@@ -102,11 +102,15 @@
 
 
 
+
+
+
         },
         created() {
 
             // this.city = this.$store.getters.getCity
         },
+
         data() {
             return {
                 city: this.$store.getters.getCity,
@@ -114,6 +118,23 @@
                 checkOutDate: this.$store.getters.getCheckOut
             }
 
+        },
+        filters: {
+
+        },
+        computed: {
+            changeSlash() {
+                let cinDate = this.checkInDate.split('-');
+                let coutDate = this.checkOutDate.split('-');
+                return [cinDate[1] + '月' + cinDate[2] + '日', coutDate[1] + '月' + coutDate[2] + '日']
+            },
+
+            getNightCount() {
+                let ciTime = new Date(this.checkInDate.split('-').join(',')).getTime();
+                let coTime = new Date(this.checkOutDate.split('-').join(',')).getTime();
+
+                return (coTime - ciTime) / (1000 * 3600 * 24);
+            }
         },
         methods: {
             // add(){
@@ -127,8 +148,10 @@
             }
 
         },
-        mounted() {
-
+        watched: {
+            checkInDate(nval, oval) {
+                console.log(nval, oval)
+            }
         }
 
     }
