@@ -25,8 +25,9 @@
 
 <script>
     import Vue from 'vue'
-    import { getDayCountOfMonth, getFirstDayPosition } from '../util'
+    import { getDayCountOfMonth, getFirstDayPosition, formateDate, compareTime } from '../util'
     import { mapActions } from 'vuex'
+
 
 
     export default {
@@ -38,7 +39,7 @@
             return {
                 tableRows: [[], [], [], [], [], []],
 
-                selectDate:[],
+                selectDate: [],
 
             }
         },
@@ -87,22 +88,29 @@
                             now: false,
                             isSelect: false,
                             disabled: false || disable,
+                            inRange: false,
                             startDate: false,
                             endDate: false
                         };
 
 
 
-                        if(this.startDate == this.year + '-' + (this.month + 1) +'-'+ day){
+                        if (this.startDate == this.year + '-' + (this.month + 1) + '-' + day) {
 
-                            cell.startDate = true ;
+                            cell.startDate = true;
                             cell.isSelect = true;
                         }
-                        
-                        if(this.endDate == this.year + '-' + (this.month + 1) +'-'+ day){
-                            cell.startDate = true ;
+
+                        if (this.endDate == this.year + '-' + (this.month + 1) + '-' + day) {
+                            cell.startDate = true;
                             cell.isSelect = true;
                         }
+                        if (compareTime(this.endDate, this.year + '-' + (this.month + 1) + '-' + day) &&
+                            compareTime(this.year + '-' + (this.month + 1) + '-' + day, this.startDate)) {
+                            cell.inRange = true;
+                        }
+
+
                         if (now.getFullYear() === cell.year &&
                             now.getMonth() == cell.month &&
                             now.getDate() === cell.text) {
@@ -145,6 +153,8 @@
 
                 if (cell.isSelect && !cell.disabled) {
                     return ['S']
+                } else if (cell.inRange) {
+                    return ['inrange']
                 } else {
                     return ['W']
                 }
@@ -152,7 +162,7 @@
             },
             handlerClick(e, a) {
 
-                console.log(e.target);
+                console.log(e);
                 let target = event.target;
 
                 const cellIndex = target.cellIndex;
@@ -226,6 +236,9 @@
     
     .N {
         background: #000;
+    }
+    .inrange {
+        background: #e85252;
     }
     
     .S {

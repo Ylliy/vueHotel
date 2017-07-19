@@ -42,3 +42,16 @@ function delCookie(name) {
     if (cval != null)
         document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
+
+
+
+export function formateDate(date) {
+    return date.year + '-' + (date.month + 1) + '-' + date.text
+}
+
+export function compareTime(t1, t2) {
+    let time1 = new Date(t1).getTime();
+    let time2 = new Date(t2).getTime();
+
+    return time1 > time2;
+}

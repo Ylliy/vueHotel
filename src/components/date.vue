@@ -15,16 +15,17 @@
 <script>
   import Vue from 'vue'
   import DateTable from './date-table'
-  function formateDate(date) {
-    return date.year + '-' + (date.month + 1) + '-' + date.text
-  }
+  import {formateDate,compareTime} from '../util'
+  // function formateDate(date) {
+  //   return date.year + '-' + (date.month + 1) + '-' + date.text
+  // }
 
-  function compareTime(t1, t2) {
-    let time1 = new Date(t1).getTime();
-    let time2 = new Date(t2).getTime();
+  // function compareTime(t1, t2) {
+  //   let time1 = new Date(t1).getTime();
+  //   let time2 = new Date(t2).getTime();
 
-    return time1 >= time2;
-  }
+  //   return time1 >= time2;
+  // }
 
   export default {
     beforeCreate() {
@@ -93,7 +94,11 @@
             this.endDate = this.selectDate[1];
 
             this.$store.commit('changeDate', this.selectDate);
+
+            setTimeout(function(){
+
             history.go(-1)
+            },300)
 
           } else {
             this.selectDate.pop();
