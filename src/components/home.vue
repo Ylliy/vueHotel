@@ -1,94 +1,97 @@
 <template>
-    <div class="home">
-        <div class="top-tabs">
-            <router-link to="/" tag="div" class="country-hotel tab-exchange active">
-                <a>国内酒店</a>
-            </router-link>
-            <div class="global-hotel tab-exchange ">
-                <a href="https://m.tuniu.com/globalHotel" target="_blank">国际酒店</a>
+    <transition name="fade-in">
+        <div class="home">
+            <div class="top-tabs">
+                <router-link to="/" tag="div" class="country-hotel tab-exchange active">
+                    <a>国内酒店</a>
+                </router-link>
+                <div class="global-hotel tab-exchange ">
+                    <a href="https://m.tuniu.com/globalHotel" target="_blank">国际酒店</a>
+                </div>
+    
             </div>
     
-        </div>
+            <div class="search-areas">
+                <ul>
+                    <li class="location">
+                        <router-link to="/city" tag="span" class="dest">
     
-        <div class="search-areas">
-            <ul>
-                <li class="location">
-                    <router-link to="/city" tag="span" class="dest">
+                            <em>目的地</em>
     
-                        <em>目的地</em>
+                            <div class="">{{city}}</div>
+                            <i class="icon-arrow"></i>
+                        </router-link>
+                        <span class="position">
+                            <i class="icon-trip"></i>
+                            <p>我的位置</p>
+                        </span>
     
-                        <div class="">{{city}}</div>
-                        <i class="icon-arrow"></i>
-                    </router-link>
-                    <span class="position">
-                        <i class="icon-trip"></i>
-                        <p>我的位置</p>
-                    </span>
+                    </li>
     
-                </li>
-    
-                <router-link to="/datePick" tag="li" class="date">
-                    <div class="date-label">
-                        <em>日期</em>
-                    </div>
-                    <div class="in-out-date">
-                        <div class="check-date">
-                            <div class="check-in">
-                                <span>{{changeSlash[0]}}</span>
-                                <em>入住</em>
-                            </div>
-                            <div class="check-out">
-                                <span>{{changeSlash[1]}}</span>
-                                <em>离店</em>
-                            </div>
+                    <router-link to="/datePick" tag="li" class="date">
+                        <div class="date-label">
+                            <em>日期</em>
                         </div>
-                        <div class="total-night">共{{getNightCount}}晚</div>
-                    </div>
-                    <i class="icon-arrow"></i>
+                        <div class="in-out-date">
+                            <div class="check-date">
+                                <div class="check-in">
+                                    <span>{{changeSlash[0]}}</span>
+                                    <em>入住</em>
+                                </div>
+                                <div class="check-out">
+                                    <span>{{changeSlash[1]}}</span>
+                                    <em>离店</em>
+                                </div>
+                            </div>
+                            <div class="total-night">共{{getNightCount}}晚</div>
+                        </div>
+                        <i class="icon-arrow"></i>
     
-                </router-link>
+                    </router-link>
     
-                <router-link to="/keywords" tag="li" class="keywords">
-                    <p class="show">关键字/位置/品牌/酒店名</p>
-                    <i class="icon-arrow"></i>
-                    <span class="remove hide">
-                        <i class="icon-close"></i>
-                    </span>
-                </router-link>
+                    <router-link to="/keywords" tag="li" class="keywords">
+                        <p class="show">关键字/位置/品牌/酒店名</p>
+                        <i class="icon-arrow"></i>
+                        <span class="remove hide">
+                            <i class="icon-close"></i>
+                        </span>
+                    </router-link>
     
-                <li class="star-level">
-                    <p class="show">价格/星级</p>
-                    <i class="icon-arrow"></i>
-                    <span class="remove hide">
-                        <i class="icon-close"></i>
-                    </span>
-                </li>
+                    <li class="star-level">
+                        <p class="show">价格/星级</p>
+                        <i class="icon-arrow"></i>
+                        <span class="remove hide">
+                            <i class="icon-close"></i>
+                        </span>
+                    </li>
     
-            </ul>
-            <a class="search-btn">查询</a>
-        </div>
-        <div class="bottom-link clearfix">
-            <div class="order-link link-item">
-                <a href="javascript:;">
-                    <span>
-                        <label></label> 我的订单</span>
-                </a>
+                </ul>
+                <a class="search-btn" @click="handlerToNext">查询</a>
             </div>
-            <div class="coupon-link link-item">
-                <a href="javascript:;">
-                    <span>
-                        <label></label> 我的优惠券</span>
-                </a>
+            <div class="bottom-link clearfix">
+                <div class="order-link link-item">
+                    <a href="javascript:;">
+                        <span>
+                            <label></label> 我的订单</span>
+                    </a>
+                </div>
+                <div class="coupon-link link-item">
+                    <a href="javascript:;">
+                        <span>
+                            <label></label> 我的优惠券</span>
+                    </a>
+                </div>
             </div>
-        </div>
     
-    </div>
+        </div>
+    </transition>
 </template>
 <script>
     import { mapMutations, mapGetters, mapActions } from "vuex"
     export default {
         name: "",
         beforeCreate() {
+            // window.tmp1 = this;
             // console.log(this.$store);
             // console.log(this.$store.getters.timeOfCID);
             // let da = {date:"2018.6.5"}
@@ -115,7 +118,8 @@
             return {
                 city: this.$store.getters.getCity,
                 checkInDate: this.$store.getters.getCheckIn,
-                checkOutDate: this.$store.getters.getCheckOut
+                checkOutDate: this.$store.getters.getCheckOut,
+
             }
 
         },
@@ -145,13 +149,14 @@
             ...mapActions({ add: ['changeN'] }),
             show() {
                 console.log(this.$store)
+            },
+            handlerToNext() {
+                window.location.href = '//m.tuniu.com'
             }
 
         },
-        watched: {
-            checkInDate(nval, oval) {
-                console.log(nval, oval)
-            }
+        watch: {
+
         }
 
     }
@@ -465,5 +470,22 @@
         text-align: center;
         font-size: 18px;
         border-radius: 3px;
+    }
+    
+    
+    .fade-in-enter-active {
+    
+        animation: show-in .5s ease both;
+    }
+    
+    @keyframes show-in {
+        0% {
+            display: none;
+            transform: translate3d(-100%, 0, 0)
+        }
+        100% {
+            display: block;
+            transform: translate3d(0, 0, 0)
+        }
     }
 </style>
