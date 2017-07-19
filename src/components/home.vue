@@ -475,7 +475,7 @@
     
     .fade-in-enter-active {
     
-        animation: show-in .5s ease both;
+        animation: show-in .3s linear both;
     }
     
     @keyframes show-in {

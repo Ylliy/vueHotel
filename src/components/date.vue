@@ -98,7 +98,7 @@
             setTimeout(function(){
 
             history.go(-1)
-            },300)
+            },150)
 
           } else {
             this.selectDate.pop();

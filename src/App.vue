@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <router-view></router-view>
   
   </div>
@@ -47,5 +47,8 @@ import {setCookie,getCookie} from './util'
     line-height: 1;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
+  }
+  .app {
+    position: relative;
   }
 </style>

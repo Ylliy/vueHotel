@@ -38,21 +38,23 @@
 
 
 <style lang="scss">
-    .datepick {
-        position: absolute;
-        top: 0;
-        left:0;
-        width: 100%
-    }
+    .datepick {}
+    
     .slide-right-leave-active {
-        animation: sli .5s ease;
+        animation: sli .3s linear;
     }
     
     @keyframes sli {
         0% {
+            position: absolute;
+            top: 0; // left:0;
+            width: 100%;
             transform: translate(0, 0);
         }
         100% {
+            position: absolute;
+            top: 0; // left:0;
+            width: 100%;
             display: none;
             transform: translate(100%, 0);
         }
