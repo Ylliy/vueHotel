@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import {setCookie,getCookie} from './util'
+  import { setCookie, getCookie } from './util'
   export default {
     name: 'app',
     beforeCreate() {
@@ -21,6 +21,16 @@ import {setCookie,getCookie} from './util'
       }
       var data = JSON.parse(document.cookie.split('=')[1] || JSON.stringify(payload));
       this.$store.commit('setSearchInfo', data);
+
+
+      this.$http({
+        method: 'get',
+        url: 'http://127.0.0.1:8081/city',
+        // responseType: 'stream'
+      }).then((r) => {
+        console.log(r.data.data);
+        localStorage.setItem('citylist',JSON.stringify(r.data.data))
+      })
 
       // }
     }
@@ -48,6 +58,7 @@ import {setCookie,getCookie} from './util'
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
   }
+  
   .app {
     position: relative;
   }

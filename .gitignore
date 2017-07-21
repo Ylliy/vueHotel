@@ -11,3 +11,4 @@ element
 .vscode
 test/
 testxss.js
+/http-server
