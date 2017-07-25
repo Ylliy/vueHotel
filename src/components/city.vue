@@ -4,7 +4,7 @@
       <router-link to="/">back</router-link>
       <h1>选择城市</h1>
     </div>
-    <div id="citiesEl">
+    <div id="citiesEl" @click="pickCity">
       <section class="hotcity-list">
         <p>热门</p>
         <ul class="city-contain">
@@ -21,6 +21,13 @@
         </ul>
   
       </section>
+  
+    </div>
+    <div class="rightbar">
+      <ul>
+        <li v-for="name,key in indexArr" key="key" @click="scrollTo" :data-targetClass="name | toClass">{{name}}</li>
+      </ul>
+  
     </div>
   
   </div>
@@ -55,16 +62,22 @@
     data() {
       return {
         cityData: JSON.parse(localStorage.getItem('citylist')) || {},
-        indexArr: [],
+        indexArr: ['热门'],
 
       }
     },
     computed: {
 
       showCitylist() {
+        let context = this;
         let data = this.cityData;
 
         let hotCityList = this.cityData.hotCityList;
+
+        hotCityList.map(function(v,i,arr){
+          context.$set(arr[i],'isSelect',false);
+          // console.log(context);
+        })
 
         return hotCityList;
 
@@ -73,19 +86,39 @@
 
         let index = this.cityData.indexCityList;
         // this.cityData.indexCityList.map(function(){})
+        let newData = {};
         for (var key in this.cityData.indexCityList) {
           console.log(key);
           if (this.cityData.indexCityList[key].length > 0) {
             this.indexArr.push(key);
+            newData[key] = this.cityData.indexCityList[key];
 
           }
         }
 
-        return index;
+        return newData;
       },
 
     },
+    filters: {
+      toClass(a) {
+        console.log(a);
+        if (a == '热门') {
+          return 'hotcity-list'
+        }
+        return a;
+      }
+    },
     methods: {
+      scrollTo(event) {
+        console.log(event);
+        let el = document.getElementsByClassName(event.target.getAttribute('data-targetClass'))[0];
+        let offTop = el.offsetTop;
+        window.scroll(0, offTop + 36);
+      },
+      pickCity(event){
+        console.log(event)
+      },
 
 
 
@@ -152,6 +185,25 @@
     font-size: 14px;
     color: #666;
     padding: 10px 0 10px 15px;
+  }
+  
+  .rightbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: rgba(169, 164, 164, 0.33);
+    height: 100%;
+  }
+  
+  .rightbar ul {
+    width: 34px;
+    text-align: center;
+  }
+  
+  .rightbar ul li {
+    height: 27px;
+    font-size: 13px;
+    line-height: 27px;
   }
 </style>
 
