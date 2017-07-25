@@ -8,14 +8,14 @@
       <section class="hotcity-list">
         <p>热门</p>
         <ul class="city-contain">
-          <li class="city-item hot-city" v-for="city in showCitylist" key="city.cityCode">{{city.cityName}}</li>
+          <li class="city-item hot-city" :class="setClass(city)" v-for="city in showCitylist" key="city.cityCode">{{city.cityName}}</li>
         </ul>
       </section>
   
       <section class="index-list" :class="key" v-for="items,key in showIndexCity">
         <p>{{key}}</p>
         <ul class="city-contain">
-          <li class="city-item" v-for="city in items">
+          <li class="city-item" v-for="city in items" :class="setClass(city)">
             {{city.cityName}}
           </li>
         </ul>
@@ -29,7 +29,10 @@
       </ul>
   
     </div>
+    <div v-for="v in test">
+      {{test.a}}
   
+    </div>
   </div>
 </template>
 
@@ -56,13 +59,16 @@
           // console.log(r.data.data);
           this.cityData = Object.assign({}, this.cityData, r.data)
         })
-        window.tmpxx = this;
       }
+      window.tmpxx = this;
     },
     data() {
       return {
-        cityData: JSON.parse(localStorage.getItem('citylist')) || {},
+        cityData: Object.assign({}, this.cityData, JSON.parse(localStorage.getItem('citylist')) || {}),
         indexArr: ['热门'],
+
+        test: {a:'123'}
+        // 对象的对象触发更改触发computer等问题
 
       }
     },
@@ -71,11 +77,11 @@
       showCitylist() {
         let context = this;
         let data = this.cityData;
-
+        console.log('xxxxxxxxxxxxxxxxx')
         let hotCityList = this.cityData.hotCityList;
 
-        hotCityList.map(function(v,i,arr){
-          context.$set(arr[i],'isSelect',false);
+        hotCityList.map(function (v, i, arr) {
+          context.$set(arr[i], 'isSelect', false);
           // console.log(context);
         })
 
@@ -83,15 +89,19 @@
 
       },
       showIndexCity() {
-
+        let context = this;
         let index = this.cityData.indexCityList;
         // this.cityData.indexCityList.map(function(){})
         let newData = {};
         for (var key in this.cityData.indexCityList) {
-          console.log(key);
+          // console.log(key);
           if (this.cityData.indexCityList[key].length > 0) {
             this.indexArr.push(key);
             newData[key] = this.cityData.indexCityList[key];
+            newData[key].map(function (v, i, arr) {
+              context.$set(arr[i], 'isSelect', false);
+              // console.log(context);
+            })
 
           }
         }
@@ -99,10 +109,17 @@
         return newData;
       },
 
+      ctest() {
+        console.log(this.test);
+        console.log(this.test.a);
+        console.log('****************');
+        return this.test
+      }
+
     },
     filters: {
       toClass(a) {
-        console.log(a);
+
         if (a == '热门') {
           return 'hotcity-list'
         }
@@ -116,16 +133,39 @@
         let offTop = el.offsetTop;
         window.scroll(0, offTop + 36);
       },
-      pickCity(event){
-        console.log(event)
+      pickCity(event) {
+        console.log(event);
+        let name = event.target.innerText;
+        let key = event.target.parentElement.previousElementSibling.innerText;
+        let allChildren = event.target.parentElement.children;
+
+        // for (let ak in allChildren) {
+
+        //     console.log(ak);
+        //   if (allChildren[ak].innerText == 'name'){
+        //   }
+        // }
+        let pos;
+        for (let i = 0; i < allChildren.length; i++) {
+          if (allChildren[i].innerText == name) {
+            pos = i;
+          }
+        }
+
+        if (key == '热门') {
+          this.$set(this.cityData.hotCityList[pos], 'isSelect', true);
+        }
+
+
       },
 
-
-
-      setNajn() {
-        this.$store.commit("changeCity", '南京');
-        history.go(-1)
+      setClass(city) {
+        if (city.isSelect) {
+          return 'isS'
+        }
       }
+
+
     },
     watch: {
       cityData(newV, oldV) {
