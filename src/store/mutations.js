@@ -8,7 +8,7 @@ export default {
         state.cityName = data.cityName ? data.cityName : '';
     },
     changeCity(state, payload) {
-        state.cityName = payload;
+        state.cityName = payload.cityName;
     },
     changeDate(state, val) {
         state.checkInDate = val[0];

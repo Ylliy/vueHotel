@@ -29,10 +29,7 @@
       </ul>
   
     </div>
-    <div v-for="v in test">
-      {{test.a}}
   
-    </div>
   </div>
 </template>
 
@@ -66,8 +63,8 @@
       return {
         cityData: Object.assign({}, this.cityData, JSON.parse(localStorage.getItem('citylist')) || {}),
         indexArr: ['热门'],
-
-        test: {a:'123'}
+        test: 123,
+        hasSelect: this.$store.getters.getCity
         // 对象的对象触发更改触发computer等问题
 
       }
@@ -76,12 +73,15 @@
 
       showCitylist() {
         let context = this;
-        let data = this.cityData;
-        console.log('xxxxxxxxxxxxxxxxx')
+        let data = this.cityData;  
+        console.log('xxxxxxxxxxxxxxxxx');
         let hotCityList = this.cityData.hotCityList;
 
         hotCityList.map(function (v, i, arr) {
           context.$set(arr[i], 'isSelect', false);
+          if (context.hasSelect == v.cityName) {
+            context.$set(arr[i], 'isSelect', true);
+          }
           // console.log(context);
         })
 
@@ -100,6 +100,9 @@
             newData[key] = this.cityData.indexCityList[key];
             newData[key].map(function (v, i, arr) {
               context.$set(arr[i], 'isSelect', false);
+              if (context.hasSelect == v.cityName) {
+                context.$set(arr[i], 'isSelect', true);
+              }
               // console.log(context);
             })
 
@@ -109,12 +112,7 @@
         return newData;
       },
 
-      ctest() {
-        console.log(this.test);
-        console.log(this.test.a);
-        console.log('****************');
-        return this.test
-      }
+
 
     },
     filters: {
@@ -139,6 +137,8 @@
         let key = event.target.parentElement.previousElementSibling.innerText;
         let allChildren = event.target.parentElement.children;
 
+        let city;
+
         // for (let ak in allChildren) {
 
         //     console.log(ak);
@@ -153,16 +153,33 @@
         }
 
         if (key == '热门') {
-          this.$set(this.cityData.hotCityList[pos], 'isSelect', true);
+          city = this.cityData.hotCityList[pos]
+
+        } else {
+          city = this.cityData.indexCityList[key][pos]
         }
+
+        this.$set(city, 'isSelect', true);
+        this.$store.commit('changeCity', city);
+
+        history.go(-1);
+
+
 
 
       },
 
       setClass(city) {
-        if (city.isSelect) {
-          return 'isS'
+        let c = '';
+        console.log("渲染class")
+        if (this.hasSelect && city.cityName == this.hasSelect) {
+          c += 'asd '
         }
+        if (city.isSelect) {
+          c += 'isS '
+        }
+
+        return c
       }
 
 
@@ -244,6 +261,10 @@
     height: 27px;
     font-size: 13px;
     line-height: 27px;
+  }
+  
+  .isS {
+    background: #000;
   }
 </style>
 
