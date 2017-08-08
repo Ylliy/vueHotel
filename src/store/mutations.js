@@ -9,6 +9,9 @@ export default {
     },
     changeCity(state, payload) {
         state.cityName = payload.cityName;
+        state.lat = payload.lat;
+        state.lng = payload.lng;
+        state.cityCode = payload.cityCode;
     },
     changeDate(state, val) {
         state.checkInDate = val[0];

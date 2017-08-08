@@ -12,7 +12,7 @@
 
 <script>
     import Vue from 'vue'
-    import Date from './date'
+    // import Date from './date'
 
 
     export default {
@@ -31,7 +31,7 @@
 
         },
         components: {
-            Date
+            Date: () => import('./date')
         }
     }
 </script>

@@ -57,7 +57,7 @@
                         </span>
                     </router-link>
     
-                    <li class="star-level">
+                    <li class="star-level" @click="changeSl">
                         <p class="show">价格/星级</p>
                         <i class="icon-arrow"></i>
                         <span class="remove hide">
@@ -82,6 +82,8 @@
                     </a>
                 </div>
             </div>
+
+            <star-price :showStats="SPStatus" @cgSP="ceStatus"></star-price>
     
         </div>
     </transition>
@@ -116,9 +118,11 @@
 
         data() {
             return {
-                city: this.$store.getters.getCity,
-                checkInDate: this.$store.getters.getCheckIn,
-                checkOutDate: this.$store.getters.getCheckOut,
+                city: this.$store.state.cityName,
+                checkInDate: this.$store.state.checkInDate,
+                checkOutDate: this.$store.state.checkOutDate,
+                SPStatus: false,
+
 
             }
 
@@ -151,12 +155,32 @@
                 console.log(this.$store)
             },
             handlerToNext() {
-                window.location.href = '//m.tuniu.com'
+
+                let cityCode = this.$store.state.cityCode;
+                let lat = this.$store.state.lat;
+                let lng = this.$store.state.lng;
+                let checkInDate = this.$store.state.checkInDate;
+                let checkOutDate = this.$store.state.checkOutDate;
+                // window.location.href = '//m.tuniu.com/hotel/list/' + cityCode + 'dpsbhf_' + checkInDate + '_' + checkOutDate + '/fs/' + lat + '_' + lng + '_0_0_1_1_?isLocation=0&roomType=1'
+
+                window.location.href = `//m.tuniu.com/hotel/list/${cityCode}dpsbhf_${checkInDate}_${checkOutDate}/fs/${lat}_${lng}_0_0_1_1_?isLocation=0&roomType=1`
+
+            },
+            changeSl(){
+                this.SPStatus = !this.SPStatus
+
+            },
+            ceStatus(a){
+        
+                this.SPStatus = a;
             }
 
         },
         watch: {
 
+        },
+        components: {
+            starPrice:()=> import('./star-price')
         }
 
     }

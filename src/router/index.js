@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import Hello from '@/components/Hello'
 import Home from '@/components/home'
-import City from '@/components/city'
+// import City from '@/components/city'
 import DatePick from '@/components/datePick'
 import Keywords from '@/components/keywords'
 
@@ -19,7 +19,8 @@ export default new Router({
     }, {
         path: '/city',
         name: 'City',
-        component: City
+        component: () =>
+            import ('@/components/city')
     }, {
         path: '/datepick',
         name: 'DatePick',
