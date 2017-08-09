@@ -3,16 +3,16 @@
         <div class="star-l-cont">
             <div class="price">
                 <p class="title">价格（单选）</p>
-                <div class="price-item-cont">
-                    <div lowprice="0" highprice="0" class="p-item">不限</div>
-                    <div lowprice="0" highprice="150" class="p-item">&yen;150以下</div>
-                    <div lowprice="150" highprice="300" class="p-item">￥150-￥300</div>
-                    <div lowprice="301" highprice="450" class="p-item">￥301-￥450</div>
-                    <div lowprice="451" highprice="600" class="p-item">￥451-￥600</div>
-                    <div lowprice="601" highprice="1000" class="p-item">￥601-￥1000</div>
-                    <div lowprice="1001" highprice="0" class="p-item">￥1000以上</div>
-    
-                </div>
+                <ul class="price-item-cont" @click="selectPrice($event,'asdasd')">
+                    <!-- <li lowprice="0" highprice="0" class="p-item">不限</li>
+                        <li lowprice="0" highprice="150" class="p-item">&yen;150以下</li>
+                        <li lowprice="150" highprice="300" class="p-item">￥150-￥300</li>
+                        <li lowprice="301" highprice="450" class="p-item">￥301-￥450</li>
+                        <li lowprice="451" highprice="600" class="p-item">￥451-￥600</li>
+                        <li lowprice="601" highprice="1000" class="p-item">￥601-￥1000</li>
+                        <li lowprice="1001" highprice="0" class="p-item">￥1000以上</li> -->
+                    <li class="p-item" v-for="ob in dataPrice" :class="getSelect(ob)">{{ob.text}}</li>
+                </ul>
             </div>
             <div class="star">
                 <p class="title">星级（复选）</p>
@@ -38,6 +38,52 @@
         data() {
             return {
                 showSP: this.showStats,
+                dataPrice: [
+                    {
+                        text: '不限',
+                        lowPrice: '0',
+                        highPrice: '0',
+                        selected: true
+                    },
+                    {
+                        text: '￥150以下',
+                        lowPrice: '0',
+                        highPrice: '150',
+                        selected: false
+                    },
+                    {
+                        text: '￥150-￥300',
+                        lowPrice: '150',
+                        highPrice: '300',
+                        selected: false
+                    },
+                    {
+                        text: '￥301-￥450',
+                        lowPrice: '301',
+                        highPrice: '450',
+                        selected: false
+                    },
+                    {
+                        text: '￥451-￥600',
+                        lowPrice: '451',
+                        highPrice: '600',
+                        selected: false
+                    },
+                    {
+                        text: '￥601-￥1000',
+                        lowPrice: '601',
+                        highPrice: '1000',
+                        selected: false
+                    },
+                    {
+                        text: '￥1000以上',
+                        lowPrice: '1001',
+                        highPrice: '0',
+                        selected: false
+                    }
+                ]
+
+
             }
         },
         props: {
@@ -49,8 +95,30 @@
 
         },
         methods: {
+            getSelect(ob) {
+
+                if (ob.selected)
+                    return 'select'
+            },
             bgClick() {
                 this.$emit('cgSP', !this.showSP)
+            },
+            selectPrice(e, a) {
+                // console.log(e, a)
+                if (e.target.nodeName == 'LI'){
+                    for (let ob in this.dataPrice) {
+                        var data = this.dataPrice[ob]
+
+                        if (e.target.innerText == data.text) {
+                            data.selected = true;
+                        }
+                        else {
+                            data.selected = false;
+                        }
+
+                    }
+
+                }
             }
         },
         watch: {
@@ -80,10 +148,10 @@
     }
     
     .price-item-cont {
-        display: flex;
+        /* display: flex; */
     }
     
-    .p-item,.s-item  {
+    .p-item {
         font-size: 12px;
         color: #666;
         display: inline-block;
@@ -117,8 +185,7 @@
         color: #fff;
     }
     
-    .p-item select,
-    .s-item select{
+    .p-item.select {
         border-color: #31A959;
         background: #33BD61;
         color: #fff;
