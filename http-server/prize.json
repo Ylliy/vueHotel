@@ -1,0 +1,40 @@
+{
+    "success": true,
+    "msg": "OK",
+    "errorCode": 710000,
+    "data": {
+        "status": 1,
+        "logId": 34759930,
+        "userId": 29418,
+        "index": 0,
+        "restTimes": 0,
+        "receive_type": 3,
+        "prizeInfo": {
+            "prizeId": 39842902,
+            "itemsId": 20046,
+            "title": "\u9014\u725b\u9152\u5e97\u590f\u65e5\u6e05\u51c9\u798f\u5229",
+            "prizeWorth": "100",
+            "description": "\u590f\u65e5\u6e05\u51c9\u798f\u5229\u793c\u5305",
+            "imgUrl": "",
+            "winDescription": "\u60a8\u5df2\u9886\u53d6\u4f18\u60e0\u5238\u8d76\u7d27\u4f7f\u7528\u5427\uff01",
+            "itemUrl": "",
+            "type": 14,
+            "package": [{
+                    "type": 18,
+                    "name": "\u56fd\u5185\u9152\u5e9750\u5143\u4f18\u60e0\u5238",
+                    "amount": "50",
+                    "description": "\u6bcf\u6ee1150\u51cf5\u5143",
+                    "expTime": "2017.8.31"
+                },
+                {
+                    "type": 18,
+                    "name": "\u56fd\u5185\u9152\u5e9750\u5143\u4f18\u60e0\u5238",
+                    "amount": "50",
+                    "description": "\u6bcf\u6ee1150\u51cf5\u5143",
+                    "expTime": "2017.8.31"
+                }
+            ],
+            "cardInfo": []
+        }
+    }
+}
