@@ -23,14 +23,14 @@
       this.$store.commit('setSearchInfo', data);
 
 
-      this.$http({
-        method: 'get',
-        url: 'http://127.0.0.1:8081/city',
-        // responseType: 'stream'
-      }).then((r) => {
-        console.log(r.data.data);
-        localStorage.setItem('citylist',JSON.stringify(r.data.data))
-      })
+      // this.$http({
+      //   method: 'get',
+      //   url: 'http://127.0.0.1:8081/city',
+      //   // responseType: 'stream'
+      // }).then((r) => {
+      //   console.log(r.data.data);
+      //   localStorage.setItem('citylist',JSON.stringify(r.data.data))
+      // })
 
       // }
     }
