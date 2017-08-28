@@ -5,7 +5,7 @@
                 <router-link to="/">back</router-link>
             </div>
     
-            <date></date>
+            <date :limitDay="28"></date>
         </div>
     </transition>
 </template>
@@ -33,18 +33,18 @@
         },
         created() {
             const context = this;
-            setInterval(() => {
-                this.$http({
-                    method: 'get',
-                    url: 'http://127.0.0.1:8081/city',
-                    // responseType: 'stream'
-                }).then((r) => {
-                    console.log(r);
-                    console.log(this.m)
+            // setInterval(() => {
+            //     this.$http({
+            //         method: 'get',
+            //         url: 'http://127.0.0.1:8081/city',
+            //         // responseType: 'stream'
+            //     }).then((r) => {
+            //         console.log(r);
+            //         console.log(this.m)
                     
 
-                })
-            }, 1000)
+            //     })
+            // }, 1000)
 
         },
         computed: {

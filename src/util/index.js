@@ -55,3 +55,11 @@ export function compareTime(t1, t2) {
 
     return time1 > time2;
 }
+
+
+export function compareTimeLimit(t1, t2, limit) {
+    let time1 = new Date(t1).getTime();
+    let time2 = new Date(t2).getTime();
+    let limitTime = limit * 24 * 3600 * 1000;
+    return time2 >= (time1 + limitTime);
+}

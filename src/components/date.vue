@@ -7,7 +7,7 @@
     <div v-for="ym in printYear(4)" :key="ym" class="canlendar">
   
       <div class="table-header">{{transformMonth(ym.month)}}月&nbsp;&nbsp;&nbsp;&nbsp;{{ym.year}}</div>
-      <date-table :year="ym.year" :month="ym.month" @pick="handlerClick" :startDate="startDate" :endDate="endDate"></date-table>
+      <date-table :year="ym.year" :month="ym.month" @pick="handlerClick" :startDate="startDate" :endDate="endDate" :limitDay="limitDay"></date-table>
     </div>
   </div>
 </template>
@@ -15,7 +15,7 @@
 <script>
   import Vue from 'vue'
   import DateTable from './date-table'
-  import {formateDate,compareTime} from '../util'
+  import {formateDate,compareTime,compareTimeLimit} from '../util'
   // function formateDate(date) {
   //   return date.year + '-' + (date.month + 1) + '-' + date.text
   // }
@@ -40,6 +40,9 @@
         startDate: '' || this.$store.getters.getCheckIn,
         endDate: '' || this.$store.getters.getCheckOut
       }
+    },
+    props:{
+      limitDay:{}
     },
 
     computed: {
@@ -89,6 +92,9 @@
           this.selectDate.push(formateDate(e));
         } else if (this.selectDate.length == 1) {
           if (compareTime(formateDate(e), this.selectDate[0])) {
+            if (compareTimeLimit(this.selectDate[0],formateDate(e),this.limitDay)){
+              return ;
+            }
             this.selectDate.push(formateDate(e));
             this.startDate = this.selectDate[0];
             this.endDate = this.selectDate[1];

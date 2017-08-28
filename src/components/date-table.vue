@@ -25,7 +25,7 @@
 
 <script>
     import Vue from 'vue'
-    import { getDayCountOfMonth, getFirstDayPosition, formateDate, compareTime } from '../util'
+    import { getDayCountOfMonth, getFirstDayPosition, formateDate, compareTime ,compareTimeLimit} from '../util'
     import { mapActions } from 'vuex'
 
 
@@ -48,7 +48,8 @@
             month: {},
 
             startDate: {},
-            endDate: {}
+            endDate: {},
+            limitDay:{}
 
         },
         computed: {
@@ -81,6 +82,8 @@
                             disable = false;
                         }
 
+      
+
                         let cell = {
                             year: year,
                             month,
@@ -109,7 +112,16 @@
                             compareTime(this.year + '-' + (this.month + 1) + '-' + day, this.startDate)) {
                             cell.inRange = true;
                         }
+                        
+                        if (compareTimeLimit(this.startDate,cell.year + '-' + (this.month + 1) + '-' + day, this.limitDay) && this.endDate == undefined) {
+                            cell.isSelect= false;
+                            cell.disabled= true;
+                            cell.inRange= false;
+                            cell.startDate= false;
+                            cell.endDate= false;
 
+                        }
+      
 
                         if (now.getFullYear() === cell.year &&
                             now.getMonth() == cell.month &&
@@ -169,6 +181,13 @@
                 const rowIndex = target.parentNode.rowIndex;
 
                 const cell = this.rows[rowIndex - 1][cellIndex];
+
+                if (compareTimeLimit(this.startDate,cell.year + '-' + (cell.month + 1) + '-' + cell.text, this.limitDay) && this.endDate == undefined) {
+                    return
+
+                }
+
+
 
                 cell.isSelect = true;
                 // console.log(this.minDate instanceof Object);
