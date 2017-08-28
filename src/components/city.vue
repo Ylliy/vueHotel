@@ -40,28 +40,40 @@
 
 
       if (localStorage.getItem('citylist') === null) {
-        // this.$http({
-        //   method: 'get',
-        //   url: 'http://127.0.0.1:8081/city',
-        //   // responseType: 'stream'
+        this.$http({
+          method: 'get',
+          url: 'http://127.0.0.1:8081/city',
+          // responseType: 'stream'
+        }).then((m) => {
+          let r = m.data;
+          // console.log(r,this)
+          this.$set(this.cityData,'hotCityList',r.data.hotCityList);
+          this.cityData.indexCityList = Object.assign({}, this.cityData.indexCityList, r.data.indexCityList)
+
+        })
+        // fetch('http://127.0.0.1:8081/city').then((r) => {
+        //   return r.json();
+
         // }).then((r) => {
-        //   this.cityData = Object.assign({}, this.cityData, r.data.data)
+        //   // console.log('*****', this.cityData)
+        //   // console.log(r.data.data);
+        //   // this.cityData = Object.assign({}, this.cityData, r.data)
+        //   this.$set(this.cityData,'hotCityList',r.data.hotCityList);
+        //   this.cityData.indexCityList = Object.assign({}, this.cityData.indexCityList, r.data.indexCityList)
 
         // })
-        fetch('http://127.0.0.1:8081/city').then((r) => {
-          return r.json();
-
-        }).then((r) => {
-          // console.log('*****', this.cityData)
-          // console.log(r.data.data);
-          this.cityData = Object.assign({}, this.cityData, r.data)
-        })
       }
       window.tmpxx = this;
     },
     data() {
       return {
-        cityData: Object.assign({}, this.cityData, JSON.parse(localStorage.getItem('citylist')) || {}),
+        // cityData: Object.assign({}, this.cityData, JSON.parse(localStorage.getItem('citylist')) || {}),
+        cityData:{
+          hotCityList:[],
+          indexCityList:{},
+
+
+        },      
         indexArr: ['热门'],
         test: 123,
         hasSelect: this.$store.getters.getCity
@@ -73,7 +85,7 @@
 
       showCitylist() {
         let context = this;
-        let data = this.cityData;  
+        // let data = this.cityData;  
         console.log('xxxxxxxxxxxxxxxxx');
         let hotCityList = this.cityData.hotCityList;
 
@@ -84,6 +96,8 @@
           }
           // console.log(context);
         })
+
+
 
         return hotCityList;
 
