@@ -16,5 +16,10 @@ export default {
     changeDate(state, val) {
         state.checkInDate = val[0];
         state.checkOutDate = val[1];
+    },
+    chageCityListData(state, val) {
+        // state.cityData = val;
+        debugger;
+        state.cityData = Object.assign(state.cityData, val)
     }
 }

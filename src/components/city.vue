@@ -36,11 +36,12 @@
 
 <script>
   import comHeader from './comHeader.vue'
+
   export default {
     beforeCreate() {
 
-
-      if (localStorage.getItem('citylist') === null) {
+      // console.log(Object.keys(this.$store.state.cityData).indexOf('hotCityList') == -1)
+      if (Object.keys(this.$store.state.cityData).length == 0) {
         this.$http({
           method: 'get',
           url: 'http://127.0.0.1:8081/city',
@@ -50,7 +51,7 @@
           // console.log(r,this)
           this.$set(this.cityData,'hotCityList',r.data.hotCityList);
           this.cityData.indexCityList = Object.assign({}, this.cityData.indexCityList, r.data.indexCityList)
-
+          
         })
         // fetch('http://127.0.0.1:8081/city').then((r) => {
         //   return r.json();
@@ -63,7 +64,12 @@
         //   this.cityData.indexCityList = Object.assign({}, this.cityData.indexCityList, r.data.indexCityList)
 
         // })
+      }else {
+        this.$set(this.cityData,'hotCityList',this.$store.state.cityData.hotCityList);
+        this.cityData.indexCityList = Object.assign({}, this.cityData.indexCityList, this.$store.state.cityData.indexCityList);
       }
+
+
       window.tmpxx = this;
     },
     data() {

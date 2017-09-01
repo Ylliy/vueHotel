@@ -11,5 +11,6 @@ export default {
     },
     getCheckOut(state) {
         return state.checkOutDate
-    }
+    },
+
 }

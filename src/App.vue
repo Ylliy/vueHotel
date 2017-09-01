@@ -21,7 +21,7 @@
       }
       var data = JSON.parse(document.cookie.split('=')[1] || JSON.stringify(payload));
       this.$store.commit('setSearchInfo', data);
-
+      this.$store.dispatch('getCityList')
 
       // this.$http({
       //   method: 'get',

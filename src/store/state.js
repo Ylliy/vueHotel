@@ -5,5 +5,6 @@ export default {
     cityName: '',
     lat: '',
     lng: '',
-    keyWords: ''
+    keyWords: '',
+    cityData: {}
 }
