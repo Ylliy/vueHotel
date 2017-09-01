@@ -1,8 +1,8 @@
 <template>
   <div>
-    <router-link to="/">back</router-link>
-    <h1>关键词</h1>
-  
+    <!-- <router-link to="/">back</router-link>
+    <h1>关键词</h1> -->
+    <com-header :title="title"></com-header>
     <a ref="asda">{{a}}{{m}}</a>> {{b}} {{d()}} {{da.a}}
     <input type="text" v-on:change="cgv(this)">
   </div>
@@ -94,6 +94,7 @@
     },
     data() {
       return {
+        title:'关键词',
         a: '123',
         b: "asdasd",
         da: {
@@ -150,6 +151,9 @@
     // mounted() {
     //   this.ddtst();
     // }
+    components:{
+      comHeader: require('./comHeader')
+    }
   }
 </script>
 

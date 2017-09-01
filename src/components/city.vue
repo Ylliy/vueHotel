@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div>
+    <!-- <div>
       <router-link to="/">back</router-link>
       <h1>选择城市</h1>
-    </div>
+    </div> -->
+    <com-header :title="title"></com-header>
     <div id="citiesEl" @click="pickCity">
       <section class="hotcity-list">
         <p>热门</p>
@@ -34,7 +35,7 @@
 </template>
 
 <script>
-
+  import comHeader from './comHeader.vue'
   export default {
     beforeCreate() {
 
@@ -67,6 +68,7 @@
     },
     data() {
       return {
+        title:'选择城市',
         // cityData: Object.assign({}, this.cityData, JSON.parse(localStorage.getItem('citylist')) || {}),
         cityData:{
           hotCityList:[],
@@ -204,7 +206,7 @@
       }
     },
     components: {
-
+      comHeader: comHeader
     }
   }
 </script>
@@ -279,6 +281,9 @@
   
   .isS {
     background: #000;
+  }
+  #citiesEl,.rightbar {
+    padding-top: 45px;
   }
 </style>
 

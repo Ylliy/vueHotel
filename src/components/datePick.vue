@@ -1,9 +1,11 @@
 <template>
     <transition name="slide-right">
         <div class="datepick">
-            <div>
+            <!-- <div>
                 <router-link to="/">back</router-link>
-            </div>
+            </div> -->
+            <com-header :title="title"></com-header>
+
     
             <date :limitDay="28"></date>
         </div>
@@ -13,11 +15,13 @@
 <script>
     import Vue from 'vue'
     // import Date from './date'
+    import comHeader from './comHeader'
 
 
     export default {
         data() {
             return {
+                title:'选择日期',
                 m: '123'
             }
         },
@@ -56,7 +60,8 @@
 
         },
         components: {
-            Date: () => import('./date')
+            Date: () => import('./date'),
+            comHeader : comHeader,
         }
     }
 </script>

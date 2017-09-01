@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="allcalen">
     <!--<div>
                           <router-link to="/">back</router-link>
                         </div>-->
@@ -176,4 +176,8 @@
       background-color: #ededed;
     }
   }
+  .allcalen {
+    padding-top:45px;
+  }
+
 </style>

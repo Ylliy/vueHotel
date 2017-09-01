@@ -167,7 +167,9 @@
                     return ['S']
                 } else if (cell.inRange) {
                     return ['inrange']
-                } else {
+                } else if(cell.disabled){
+                    return ['cantSele']
+                } else{
                     return ['W']
                 }
 
@@ -175,7 +177,8 @@
             handlerClick(e, a) {
 
                 console.log(e);
-                let target = event.target;
+                let target = event.target.nodeName=='SPAN'?event.path[1]:event.target;
+
 
                 const cellIndex = target.cellIndex;
                 const rowIndex = target.parentNode.rowIndex;
@@ -262,6 +265,9 @@
     
     .S {
         background: red;
+    }
+    td.cantSele {
+        color: #c1c1c1;
     }
 </style>
 
