@@ -38,10 +38,9 @@
   import comHeader from './comHeader.vue'
 
   export default {
-    beforeCreate() {
-
-      // console.log(Object.keys(this.$store.state.cityData).indexOf('hotCityList') == -1)
-      if (Object.keys(this.$store.state.cityData).length == 0) {
+    beforeMount() {
+      
+      if (!this.$store.state.cityData.hasOwnProperty('hotCityList')) {
         this.$http({
           method: 'get',
           url: 'http://127.0.0.1:8081/city',
@@ -49,9 +48,9 @@
         }).then((m) => {
           let r = m.data;
           // console.log(r,this)
-          this.$set(this.cityData,'hotCityList',r.data.hotCityList);
+          this.$set(this.cityData, 'hotCityList', r.data.hotCityList);
           this.cityData.indexCityList = Object.assign({}, this.cityData.indexCityList, r.data.indexCityList)
-          
+
         })
         // fetch('http://127.0.0.1:8081/city').then((r) => {
         //   return r.json();
@@ -67,6 +66,7 @@
       }else {
         this.$set(this.cityData,'hotCityList',this.$store.state.cityData.hotCityList);
         this.cityData.indexCityList = Object.assign({}, this.cityData.indexCityList, this.$store.state.cityData.indexCityList);
+
       }
 
 

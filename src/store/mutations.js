@@ -19,7 +19,7 @@ export default {
     },
     chageCityListData(state, val) {
         // state.cityData = val;
-        debugger;
+        // debugger;
         state.cityData = Object.assign(state.cityData, val)
     }
 }
